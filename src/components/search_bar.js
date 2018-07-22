@@ -29,15 +29,20 @@ class SearchBar extends Component {
   // accepts event object that describes what happened. 
   render() { // name of event 'onChange', then call method of event handler. 
     return (
-      <div>  
+      <div className="search-bar">  
         <input 
           // Controlled component. When the user enters something, they didn't
           // change the input value. They only ilicited the onChange method and 
           // the state is updated (setState), which causes the value to update.  
           value={this.state.term} 
-          onChange={event => this.setState({ term: event.target.value })} />
+          onChange={event => this.onInputChange(event.target.value)} />
       </div>
     );
+  }
+  
+  onInputChange(term) {
+    this.setState({term});
+    this.props.onSearchTermChange(term);
   }
 }
 
