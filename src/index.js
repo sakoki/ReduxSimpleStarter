@@ -2,7 +2,9 @@
  Packages installed with npm do not need to be called with
   a relative path.
 */
+
 import React, { Component } from 'react';
+import _ from 'lodash';
 import ReactDOM from 'react-dom';
 import YTSearch from 'youtube-api-search';
 // Files created by us requires a relative path
@@ -40,9 +42,12 @@ class App extends Component {
   // Pass function to VideoList. If VideoList calls this function, it updates Apps state. 
   // Passing a function that manipulates another component. 
   render() {
+    // debounce takes a function and returns a new function that can only be called once every 300 ms
+    const videoSearch = _.debounce((term) => { this.videoSearch(term) }, 300);
+
     return (
       <div>
-        <SearchBar onSearchTermChange={term => this.videoSearch(term)} />
+        <SearchBar onSearchTermChange={videoSearch} />
         <VideoDetail video={this.state.selectedVideo} />
         <VideoList
           onVideoSelect={selectedVideo => this.setState({selectedVideo}) } // takes video and updates App's state. 
